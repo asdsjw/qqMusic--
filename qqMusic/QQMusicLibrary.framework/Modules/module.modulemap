@@ -1,0 +1,6 @@
+framework module QQMusicLibrary {
+  umbrella header "QQMusicLibrary.h"
+
+  export *
+  module * { export * }
+}

@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "tv",
+      "filename" : "center_latger.png",
       "scale" : "1x"
     }
   ],

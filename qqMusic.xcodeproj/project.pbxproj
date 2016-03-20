@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D6CAF9AD1C9E4759004CC494 /* QQMusicLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CAF9AC1C9E4759004CC494 /* QQMusicLibrary.framework */; };
+		D6CAF9AF1C9E479B004CC494 /* QQMusicLibrary.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D6CAF9AC1C9E4759004CC494 /* QQMusicLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D6FE6A1F1C993B93004E1737 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FE6A1E1C993B93004E1737 /* main.m */; };
 		D6FE6A221C993B93004E1737 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FE6A211C993B93004E1737 /* AppDelegate.m */; };
 		D6FE6A251C993B93004E1737 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FE6A241C993B93004E1737 /* ViewController.m */; };
@@ -14,7 +16,21 @@
 		D6FE6A2A1C993B93004E1737 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6FE6A291C993B93004E1737 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D6CAF9AE1C9E4794004CC494 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D6CAF9AF1C9E479B004CC494 /* QQMusicLibrary.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		D6CAF9AC1C9E4759004CC494 /* QQMusicLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QQMusicLibrary.framework; sourceTree = "<group>"; };
 		D6FE6A1A1C993B93004E1737 /* qqMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qqMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6FE6A1E1C993B93004E1737 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D6FE6A201C993B93004E1737 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -31,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6CAF9AD1C9E4759004CC494 /* QQMusicLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +73,7 @@
 		D6FE6A1C1C993B93004E1737 /* qqMusic */ = {
 			isa = PBXGroup;
 			children = (
+				D6CAF9AC1C9E4759004CC494 /* QQMusicLibrary.framework */,
 				D6FE6A201C993B93004E1737 /* AppDelegate.h */,
 				D6FE6A211C993B93004E1737 /* AppDelegate.m */,
 				D6FE6A231C993B93004E1737 /* ViewController.h */,
@@ -86,6 +104,7 @@
 				D6FE6A161C993B93004E1737 /* Sources */,
 				D6FE6A171C993B93004E1737 /* Frameworks */,
 				D6FE6A181C993B93004E1737 /* Resources */,
+				D6CAF9AE1C9E4794004CC494 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -107,6 +126,7 @@
 				TargetAttributes = {
 					D6FE6A191C993B93004E1737 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = DDXKLK2E74;
 					};
 				};
 			};
@@ -250,10 +270,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/qqMusic",
+				);
 				INFOPLIST_FILE = qqMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sjw.qqMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -262,10 +288,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/qqMusic",
+				);
 				INFOPLIST_FILE = qqMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sjw.qqMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -288,6 +320,7 @@
 				D6FE6A301C993B93004E1737 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
