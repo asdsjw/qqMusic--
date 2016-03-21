@@ -17,6 +17,7 @@ var typeGeneral;
 var genreGeneral;
 var companyGeneral;
 var ceilGeneral;
+var sortsGeneral;
 //自动翻页的全局变量
 var autoTurnCurrentIndex;
 var autoTurnLockupInt;
@@ -764,14 +765,14 @@ function musicHome()
             <title class="highlightText">推荐</title>
           </lockup>
           <lockup onselect="albumFilterHome()">
-            <img class="circleImg" src="${BASEURL}fisr_recom.png" width="230" height="230" />
+            <img class="circleImg" src="${BASEURL}zhuanji.png" width="230" height="230" />
             <title class="highlightText">专辑</title>
           </lockup>
           <lockup onselect="songListHome()">
-            <img class="circleImg" src="${BASEURL}fisr_recom.png" width="230" height="230" />
+            <img class="circleImg" src="${BASEURL}gedan.png" width="230" height="230" />
             <title class="highlightText">歌单</title>
           </lockup>
-          <lockup>
+          <lockup onselect="searchHome()">
             <img class="circleImg" src="${BASEURL}fisr_search.png" width="230" height="230" />
             <title class="highlightText">搜索</title>
           </lockup>
@@ -817,7 +818,7 @@ function musicHome()
           <title>排行榜</title>
         </header>
         <section>
-          <lockup onselect="topListHome('4','2016-03-17')">
+          <lockup onselect="topListHome('4','2016-03-19')">
             <img class="circleImg" src="${BASEURL}liuxing.png" width="280" height="149" />
             <title class="highlightText">流行</title>
           </lockup>
@@ -948,6 +949,9 @@ function albummidHome(ids)
       text-align: center;
       width: 300;
       }
+      .shelfLayout {
+      padding: 40 40 40 90;
+    }
     </style>
   </head>
   <stackTemplate class="darkBackgroundColor" theme="dark">
@@ -971,7 +975,7 @@ albumObjectFun(data["list"],'grid');
 //专辑部分解析成lockup
 function albumObjectFun(data,grid)
 {
-	var dataItems="<"+grid+"><header><title></title></header><section>";
+	var dataItems="<"+grid+" class=\"shelfLayout\"><header><title></title></header><section>";
 			
 	for(var i=0;i<data.length;i++)
 	{
@@ -1411,7 +1415,7 @@ loadXML.addEventListener("highlight", function(event){
 	if(hightInt>autoTurnLockupInt-6)
 	{
 		autoTurnCurrentIndex++;
-		songlistFun('1',autoTurnCurrentIndex,1,"section",1);
+		songlistFun(sortsGeneral,autoTurnCurrentIndex,1,"section",1);
 	}
 });
 }
@@ -1425,7 +1429,7 @@ function songlistFun(sorts,page,appendMode,tagName,headers)
 	index > total_page ? index = total_page : index;
 	var startIndex = (index - 1) * RecordsPerPage;
 	var endIndex = index * RecordsPerPage - 1;
-	
+	sortsGeneral=sorts;
 	var d=javascriptTools.httpGetPCSongList("http://i.y.qq.com/s.plcloud/fcgi-bin/fcg_get_diss_by_tag.fcg?categoryId=10000000&sortId="+sorts+"&sin="+startIndex+"&ein="+endIndex+"&format=jsonp&g_tk=5381&loginUin=0&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&jsonpCallback=MusicJsonCallback&needNewCode=0");
 	if(d.indexOf("imgurl")>-1)
 	{
@@ -1609,4 +1613,295 @@ function sortSongListFun(ids)
 	autoTurnLockupInt=0;
 	autoTurnCurrentIndex=1;
 	songlistFun(ids,1,2,"collectionList");
+}
+
+function searchHome()
+{
+	//javascriptTools.httpGetPC("");
+	showLoadingIndicator();
+	var xml=`<document>
+    <head>
+      <style>
+        .suggestionListLayout {
+          margin: -150 0;
+        }
+        .titleHighlight{
+	        tv-text-highlight-style: marquee-on-highlight;
+        }
+      </style>
+    </head>
+    <searchTemplate>
+      <searchField/>
+      <collectionList>
+      <list>
+      <section>
+        <header>
+          <title>请输入拼音首字母搜索</title>
+        </header>
+      </section>
+    </list>
+      </collectionList>
+    </searchTemplate>
+  </document>`;
+  var loadXML=loadDoc(xml);
+  defaultPresenter(loadXML);
+  var searchField = loadXML.getElementsByTagName("searchField").item(0);
+  var keyboard = searchField.getFeature("Keyboard");
+  keyboard.onTextChange = function() {
+	  var searchText = keyboard.text;
+	  //改变输入时搜索
+	  bresrchResults(loadXML, searchText);
+  };
+}
+
+function bresrchResults(doc,searchText)
+{
+	if(searchText.length>0)
+	{
+		var seachkeyWords=encodeURI(searchText);
+		var domImplementation = doc.implementation;
+    var lsParser = domImplementation.createLSParser(1, null);
+    var lsInput = domImplementation.createLSInput();
+    lsInput.stringData = `<list>
+      <section>
+        <header>
+          <title>无 搜索结果</title>
+        </header>
+      </section>
+    </list>`;
+    var d=javascriptTools.httpGetPC("http://i.y.qq.com/s.plcloud/fcgi-bin/smartbox_new.fcg?utf8=1&is_xml=0&key="+seachkeyWords+"&g_tk=5381&loginUin=0&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&jsonpCallback=MusicJsonCallBack&needNewCode=0");
+    if(d.indexOf("mid")>-1)
+    {
+	    d=d.replace("MusicJsonCallBack(", "");
+	    d=d.replace("}\n)", "}");
+	    var data=JSON.parse(d)["data"];
+	    var song=data["song"];
+	    var singer=data["singer"];
+	    var album=data["album"];
+	    var songItmes="";
+	    var singerItmes="";
+	    var albumItmes="";
+	    if(song!=undefined)
+	    {
+		    var sItems="";
+		    var itemlist=song["itemlist"];
+		    songItmes="<shelf><header><title>单曲</title></header><section>";
+		    for(var i=0;i<itemlist.length;i++)
+		    {
+			    sItems+=`<lockup onselect="searchAddSong('${itemlist[i]["mid"]}','${itemlist[i]["id"]}')">
+              <img src="${BASEURL}musicBaidu.png" width="300" height="300" />
+              <title class="titleHighlight">${itemlist[i]["name"]}</title>
+            </lockup>`;
+		    }
+		    songItmes+=sItems;
+		    songItmes+="</section></shelf>";
+	    }
+	    
+	    if(singer!=undefined)
+	    {
+		    var sItems="";
+		    var itemlist=singer["itemlist"];
+		    singerItmes="<shelf><header><title>歌手</title></header><section>";
+		    for(var i=0;i<itemlist.length;i++)
+		    {
+			    sItems+=`<lockup onselect="searchSingerHome('${itemlist[i]["mid"]}','${itemlist[i]["name"]}')">
+              <img src="${BASEURL}musicBaidu.png" width="300" height="300" />
+              <title>${itemlist[i]["name"]}</title>
+            </lockup>`;
+		    }
+		    singerItmes+=sItems;
+		    singerItmes+="</section></shelf>";
+	    }
+	    
+	    if(album!=undefined)
+	    {
+		    var sItems="";
+		    var itemlist=album["itemlist"];
+		    albumItmes="<shelf><header><title>专辑</title></header><section>";
+		    for(var i=0;i<itemlist.length;i++)
+		    {
+			    sItems+=`<lockup onselect="albummidHome('${itemlist[i]["mid"]}')">
+              <img src="http://imgcache.qq.com/music/photo_new/T002R500x500M000${itemlist[i]["mid"]}.jpg" width="300" height="300" />
+              <title>${itemlist[i]["name"]}</title>
+            </lockup>`;
+		    }
+		    albumItmes+=sItems;
+		    albumItmes+="</section></shelf>";
+	    }
+	    
+	    lsInput.stringData=songItmes+singerItmes+albumItmes;
+	    lsParser.parseWithContext(lsInput, doc.getElementsByTagName("collectionList").item(0), 2);
+    }
+	}else
+	{
+		var domImplementation = doc.implementation;
+    var lsParser = domImplementation.createLSParser(1, null);
+    var lsInput = domImplementation.createLSInput();
+    lsInput.stringData = `<list>
+      <section>
+        <header>
+          <title>请输入拼音首字母搜索</title>
+        </header>
+      </section>
+    </list>`;
+    lsParser.parseWithContext(lsInput, doc.getElementsByTagName("collectionList").item(0), 2);
+	}
+}
+
+function searchAddSong(songMid,songId)
+{
+	if(audioList==undefined)
+	{
+		audioList=[];
+	}
+	var d=javascriptTools.searchSongMid(songMid);
+	var resultMid=d.split(",");
+	var mediaItem = new MediaItem("audio", "http://ws.stream.qqmusic.qq.com/"+songId+".m4a?fromtag=30");
+	mediaItem.artworkImageURL="http://imgcache.qq.com/music/photo_new/T002R500x500M000"+resultMid[0]+".jpg";
+	mediaItem.title=resultMid[1];
+	audioList.push(mediaItem);
+	singlePlayer(audioList.length-1,'','');
+}
+
+function searchSingerHome(ids,singerName)
+{
+	showLoadingIndicator();
+	var d=javascriptTools.httpGetPC("http://i.y.qq.com/v8/fcg-bin/fcg_v8_singer_detail_cp.fcg?tpl=20&singermid="+ids);
+	if(d.indexOf("专辑_QQ音乐")>-1)
+	{
+		autoTurnLockupInt=0;
+		autoTurnCurrentIndex=1;
+		audioList=[];
+		audioAlbumList=[];
+		var songlistStr="";
+		var songlistArray=d.split("\n");
+		for(var i=0;i<songlistArray.length;i++)
+		{
+			if(songlistArray[i].indexOf("songlist")>-1&&songlistArray[i].indexOf("albumid")>-1)
+			{
+				songlistStr=songlistArray[i];
+				break;
+			}
+		}
+		var songlistItems="";
+		var songlistGrid="<grid><header><title>热门单曲</title></header><section>";
+		songlistStr=songlistStr.substring(12, songlistStr.length-2);
+		var jsonlist=JSON.parse(songlistStr);
+		for(var b=0;b<jsonlist.length;b++)
+		{
+			var mediaItem = new MediaItem("audio", "http://ws.stream.qqmusic.qq.com/"+jsonlist[b]["songid"]+".m4a?fromtag=30");
+	mediaItem.artworkImageURL="http://imgcache.qq.com/music/photo_new/T002R500x500M000"+jsonlist[b]["albummid"]+".jpg";
+	mediaItem.title=jsonlist[b]["songname"];
+	audioList.push(mediaItem);
+			songlistItems+=`<lockup id="${autoTurnLockupInt}" onselect="singlePlayer('${b}')">
+            <img src="http://imgcache.qq.com/music/photo_new/T002R500x500M000${jsonlist[b]["albummid"]}.jpg" width="300" height="300" />
+            <title class="titleHight"><![CDATA[${jsonlist[b]["songname"]}]]></title>
+            <overlay class="titleMargin">
+            <subtitle class="titleBackgroudColor"><![CDATA[${jsonlist[b]["albumname"]}]]></subtitle>
+            </overlay>
+          </lockup>`;
+          autoTurnLockupInt++;
+		}
+		songlistGrid+=songlistItems;
+		songlistGrid+="</section></grid>";
+		var xml=`<document>
+  <head>
+    <style>
+      .lightBackgroundColor {
+        background-color: #e49c36;
+      }
+      .titleMargin{
+	    padding: 0;
+      }
+      .titleBackgroudColor{
+      background-color: rgba(0,0,0,0.6);
+      color: #FFFFFF;
+      text-align: center;
+      width: 300;
+      }
+      .titleHight{
+	      tv-text-max-lines: 3;
+      }
+    </style>
+  </head>
+  <stackTemplate theme="light" class="lightBackgroundColor" >
+    <identityBanner>
+      <heroImg src="${BASEURL}heroimg.png" width="1" height="1" />
+      <title id="radio">${singerName}歌手的音乐专辑</title>
+      <row>
+        <buttonLockup>
+          <badge src="resource://button-rate" />
+          <title>收藏</title>
+        </buttonLockup>
+        <buttonLockup onselect="showClearAudieListModal()">
+          <badge src="${BASEURL}remove.png" width="80" height="80"/>
+          <title>清空</title>
+        </buttonLockup>
+      </row>
+    </identityBanner>
+    <collectionList>${songlistGrid}
+    </collectionList>
+  </stackTemplate>
+</document>`;
+var loadXML=loadDoc(xml);
+defaultPresenter(loadXML);
+searchSingeraAblam(ids,1,"collectionList",0);
+loadXML.addEventListener("highlight", function(event){
+	var hightInt=event.target.getAttribute("id");
+	//计算每次载入的最下方的lockup
+	if(hightInt>autoTurnLockupInt-6)
+	{
+		autoTurnCurrentIndex++;
+		searchSingeraAblam(ids,autoTurnCurrentIndex,"section",1);
+	
+	}
+});
+
+
+	}
+}
+
+function searchSingeraAblam(ids,page,tagName,append)
+{
+	var ctPage=page-1;
+	if(ctPage>0)
+	{
+		ctPage=String(ctPage)+"0";
+	}
+	
+	var d=javascriptTools.httpGetPC("http://i.y.qq.com/v8/fcg-bin/fcg_v8_singer_album.fcg?g_tk=5381&loginUin=0&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&jsonpCallback=MusicJsonCallback&needNewCode=0&singermid="+ids+"&order=time&begin="+ctPage+"&num=10&exstatus=1");
+	d=d.replace("MusicJsonCallback(", "");
+	d=d.replace("}\n)", "}");
+	
+	var list=JSON.parse(d)["data"]["list"];
+	var items="";
+	var sinGrid="";
+	if(tagName=="collectionList")
+	{
+		sinGrid="<grid><header><title>专辑列表</title></header><section>";
+	}
+	
+	for(var i=0;i<list.length;i++)
+	{
+		items+=`<lockup id="${autoTurnLockupInt}" onselect="albummidHome('${list[i]["albumMID"]}')">
+            <img src="http://imgcache.qq.com/music/photo_new/T002R500x500M000${list[i]["albumMID"]}.jpg" width="300" height="300" />
+            <title class="titleHight"><![CDATA[${list[i]["albumName"]}]]></title>
+            <overlay class="titleMargin">
+            <subtitle class="titleBackgroudColor"><![CDATA[${list[i]["desc"]}]]></subtitle>
+            </overlay>
+          </lockup>`;
+          autoTurnLockupInt++;
+	}
+	sinGrid+=items;
+	
+	if(tagName=="collectionList")
+	{
+		sinGrid+="</section></grid>";
+	}
+	var doc=navigationDocument.documents.pop();
+	var domImplementation = doc.implementation;
+    var lsParser = domImplementation.createLSParser(1, null);
+    var lsInput = domImplementation.createLSInput();
+    lsInput.stringData = sinGrid;
+    lsParser.parseWithContext(lsInput, doc.getElementsByTagName(tagName).item(append), 1);
 }

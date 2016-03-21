@@ -14,7 +14,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		PxcYXJJNEViu2d1bu6EI/7gvNMM=
+		YESR9RDaCZ0KIWpo+IJPWoPu6Mw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>images/application.js</key>
 		<data>
-		UrWqkHmcaQfSVgBsFUWRm32HfwY=
+		qsrRpXqOAzTv9tpIbWZOiXpxPW4=
 		</data>
 		<key>images/dmq.png</key>
 		<data>
@@ -56,6 +56,10 @@
 		<data>
 		Z4EKEMvHhEH/BlRf7Dd8N9FMxto=
 		</data>
+		<key>images/gedan.png</key>
+		<data>
+		3PySUYo7F99J3fAJEvjdw8PljLk=
+		</data>
 		<key>images/hanguo.png</key>
 		<data>
 		O/WuegDxQ8O4sN86hQvO/BA1JlU=
@@ -67,6 +71,10 @@
 		<key>images/liuxing.png</key>
 		<data>
 		5EsqDPSie+gm4mKdGdp/SRA/pcc=
+		</data>
+		<key>images/musicBaidu.png</key>
+		<data>
+		JfZp93PRy/I4UpSM/yZ+PDHwpnw=
 		</data>
 		<key>images/neidi-2.png</key>
 		<data>
@@ -115,6 +123,10 @@
 		<key>images/ysjq.png</key>
 		<data>
 		EpRZr7KRHEM1njHEs/TvsQ3OUUg=
+		</data>
+		<key>images/zhuanji.png</key>
+		<data>
+		WkPxV301k2u8CrpyQywNMRlJROk=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -133,7 +145,7 @@
 		</data>
 		<key>images/application.js</key>
 		<data>
-		UrWqkHmcaQfSVgBsFUWRm32HfwY=
+		qsrRpXqOAzTv9tpIbWZOiXpxPW4=
 		</data>
 		<key>images/dmq.png</key>
 		<data>
@@ -167,6 +179,10 @@
 		<data>
 		Z4EKEMvHhEH/BlRf7Dd8N9FMxto=
 		</data>
+		<key>images/gedan.png</key>
+		<data>
+		3PySUYo7F99J3fAJEvjdw8PljLk=
+		</data>
 		<key>images/hanguo.png</key>
 		<data>
 		O/WuegDxQ8O4sN86hQvO/BA1JlU=
@@ -178,6 +194,10 @@
 		<key>images/liuxing.png</key>
 		<data>
 		5EsqDPSie+gm4mKdGdp/SRA/pcc=
+		</data>
+		<key>images/musicBaidu.png</key>
+		<data>
+		JfZp93PRy/I4UpSM/yZ+PDHwpnw=
 		</data>
 		<key>images/neidi-2.png</key>
 		<data>
@@ -226,6 +246,10 @@
 		<key>images/ysjq.png</key>
 		<data>
 		EpRZr7KRHEM1njHEs/TvsQ3OUUg=
+		</data>
+		<key>images/zhuanji.png</key>
+		<data>
+		WkPxV301k2u8CrpyQywNMRlJROk=
 		</data>
 	</dict>
 	<key>rules</key>
