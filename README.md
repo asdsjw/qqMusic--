@@ -8,6 +8,7 @@ qq 音乐作为一个Apple TV4测试TVML发行
 
 完成了基本功能
 包括 推荐 电台 歌单 排行 搜索 专辑 歌手显示
+由sunjunwei共享
 ==================
 ![](http://photo.yupoo.com/qzone3821877093/FpGmSwGb/medish.jpg)
 ![](http://photo.yupoo.com/qzone3821877093/FpGmTK8J/medish.jpg)
